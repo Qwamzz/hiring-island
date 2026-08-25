@@ -1,0 +1,30 @@
+# Tech role keywords swept against HiringCafe's remote listings.
+# One per line; each becomes /jobs/<slug>-remote. Comments with #.
+# Keep this focused — every line is PAGES_PER_QUERY HTTP requests per build.
+
+software engineer
+senior software engineer
+backend engineer
+frontend engineer
+full stack engineer
+data engineer
+data scientist
+machine learning engineer
+ai engineer
+devops engineer
+site reliability engineer
+platform engineer
+cloud engineer
+security engineer
+mobile engineer
+qa engineer
+engineering manager
+product manager
+product designer
+ux designer
+technical writer
+solutions architect
+data analyst
+business intelligence
+database administrator
+network engineer

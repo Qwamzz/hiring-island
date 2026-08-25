@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hiring Island — remote tech jobs, ranked by how remote they actually are</title>
+<meta name="description" content="Most 'remote' tech jobs are remote in one country. Hiring Island grades every posting by the geography it actually frees you from, and says so on the card.">
+<meta property="og:title" content="Hiring Island">
+<meta property="og:description" content="Remote tech jobs, ranked by how remote they actually are.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏝️</text></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">🏝️</span>
+      <div>
+        <h1>Hiring Island</h1>
+        <p class="tagline">Remote tech jobs, ranked by how remote they <em>actually</em> are.</p>
+      </div>
+    </div>
+
+    <p class="thesis">
+      Nearly every job board treats <strong>“Remote”</strong> as one thing. It isn’t.
+      A role open in one country and a role you can do from anywhere share a label and
+      nothing else. Hiring Island grades every posting by the geography it actually
+      frees you from — and puts that on the card.
+    </p>
+
+    <dl class="stats" id="stats" aria-label="Index summary"></dl>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <form class="controls" id="controls" role="search" aria-label="Filter jobs">
+    <div class="field grow">
+      <label for="q">Search</label>
+      <input type="search" id="q" placeholder="title, company, or tool — e.g. rust, staff, kubernetes" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label for="tier">Geographic freedom</label>
+      <select id="tier">
+        <option value="">Any</option>
+        <option value="worldwide">Work from anywhere</option>
+        <option value="multi-region">Multi-region or better</option>
+        <option value="multi-country">Two countries or better</option>
+        <option value="single-country">Anything with a stated location</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="seniority">Seniority</label>
+      <select id="seniority"><option value="">Any</option></select>
+    </div>
+
+    <div class="field">
+      <label for="pay">Min salary (USD/yr)</label>
+      <select id="pay">
+        <option value="0">Any</option>
+        <option value="60000">$60k</option>
+        <option value="100000">$100k</option>
+        <option value="150000">$150k</option>
+        <option value="200000">$200k</option>
+      </select>
+    </div>
+
+    <div class="field checks">
+      <label><input type="checkbox" id="paidOnly"> Salary listed</label>
+      <label><input type="checkbox" id="visaOnly"> Sponsors visa</label>
+    </div>
+  </form>
+
+  <div class="resultbar">
+    <p id="count" aria-live="polite">Loading…</p>
+    <div class="sortwrap">
+      <label for="sort">Sort</label>
+      <select id="sort">
+        <option value="freedom">Freedom, then pay</option>
+        <option value="recent">Most recent</option>
+        <option value="pay">Highest pay</option>
+      </select>
+    </div>
+  </div>
+
+  <ol class="jobs" id="jobs"></ol>
+
+  <p class="more"><button type="button" id="more" hidden>Show more</button></p>
+</main>
+
+<footer class="wrap site-footer">
+  <p>
+    <strong>Hiring Island</strong> rebuilds daily from
+    <a href="https://hiring.cafe" rel="noopener">HiringCafe</a> and
+    <a href="https://developers.greenhouse.io/job-board.html" rel="noopener">Greenhouse’s public Job Board API</a>.
+    Every “Apply” link goes to the employer’s own posting — there is no redirect, no account, and no tracking here.
+  </p>
+  <p class="meta" id="footer-meta"></p>
+  <p class="meta">
+    Not affiliated with HiringCafe, Greenhouse, or any employer listed.
+    Freedom grades are inferred from what each posting states; when a posting says nothing, we say that too.
+    <a href="https://github.com/Qwamzz/hiring-island" rel="noopener">Source on GitHub</a>.
+  </p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

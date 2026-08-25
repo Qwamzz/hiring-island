@@ -1,0 +1,32 @@
+# Greenhouse board tokens swept directly via the official public Job Board API.
+# One token per line, # starts a comment. Every token here was verified live.
+#
+# Find a token from a careers URL: job-boards.greenhouse.io/<token>
+# Grow this list from build output: HiringCafe results carry a boardToken for
+# employers on Greenhouse, so the aggregator sweep tells you who to add.
+
+anthropic
+stripe
+databricks
+figma
+airtable
+brex
+robinhood
+discord
+reddit
+gitlab
+mongodb
+cloudflare
+datadog
+elastic
+grafanalabs
+vercel
+scaleai
+instacart
+lyft
+pinterest
+duolingo
+asana
+affirm
+chime
+monzo

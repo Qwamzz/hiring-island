@@ -1,0 +1,78 @@
+# Rebuild the index and publish to GitHub Pages.
+#
+# The build hits ~50 HiringCafe pages and ~25 Greenhouse API endpoints. That is
+# a daily cron, paced inside the scrapers, not a crawl — keep it that way if
+# you add queries.
+#
+# build.ts exits non-zero rather than writing an empty site, so a transient
+# upstream failure leaves the previously deployed index in place instead of
+# publishing a blank board.
+
+name: Build and deploy
+
+on:
+  schedule:
+    - cron: "17 5 * * *" # 05:17 UTC daily — off the hour, to be a polite neighbour
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let a scheduled run and a manual run publish over each other.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dev dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Test
+        run: bun test
+
+      - name: Build index
+        run: bun run src/build.ts
+        env:
+          PAGES_PER_QUERY: "3"
+
+      - name: Report index size
+        run: |
+          echo "### Hiring Island index" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          bun -e 'const d=require("./site/data/jobs.json"); const t=d.meta.tierCounts;
+            console.log(`${d.meta.jobCount} roles from ${d.meta.companyCount} companies`);
+            console.log(`worldwide ${t.worldwide} | multi-region ${t["multi-region"]} | two-country ${t["multi-country"]} | single ${t["single-country"]} | unstated ${t.unspecified}`);' \
+            >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
